@@ -55,21 +55,15 @@ function global_chat_db_listener(){
 	receiver = $('.receiver').val()
 	user = $('.sender').val()
 	var last_update = window.last_update
-	var check_update = false;
-	// $('.chat-box').empty()
-	// console.log(last_update)
+	var check_update = false; 
 	$.getJSON({
 	  url: "http://localhost/chat/service/get_messages",
 	  type: "POST",
 	  data: {'id_sender': user, 'id_receiver': receiver},
 	  context: document.body
-	}).done((messages) => { 
-		// console.log('message :',Date.parse(messages[0].date));
-		// console.log('now :',last_update);
+	}).done((messages) => {  
 		if (eval(messages)) {
-			$.each(messages, (index, message) => {
-				// if(Date.parse(messages[messages.length - 1].date)> last_update){
-				// console.log(last_update)
+			$.each(messages, (index, message) => { 
 				if(Date.parse(message.date) > last_update && message.id_sender == receiver){ 
 					check_update = true;		
 				  	box(message, 'chat-left')
@@ -80,16 +74,7 @@ function global_chat_db_listener(){
 			console.log(check_update)
 			window.last_update = Date.now()
 		}
-	})
-	/*console.log(check_update)
-	if(check_update){
-		window.last_update = Date.now()
-		console.log('checked')
-	}*/
-	/*if(check_update)
-		return global_chat_db_listener(Date.now())
-	else
-		return global_chat_db_listener(last_update)*/
+	}) 
 
 }
 
